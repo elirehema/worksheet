@@ -1,0 +1,3 @@
+rootProject.name='excel'
+include ':app'
+include ':arcolio'
