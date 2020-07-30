@@ -48,7 +48,7 @@ jobs:
       with:
         project: 'https://github.com/elirehema/arcolios/projects/2'
         column_name: 'To do'
-   - name: Assign NEW issues and NEW pull requests to HEADER project
+    - name: Assign NEW issues and NEW pull requests to HEADER project
       uses: srggrs/assign-one-project-github-action@1.2.0
       if: github.event.action == 'opened'
       with:
