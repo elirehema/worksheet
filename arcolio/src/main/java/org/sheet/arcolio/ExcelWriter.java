@@ -44,11 +44,13 @@ public class ExcelWriter {
     private Context context;
     private Cell cell = null;
     Toaster toaster;
+    private ExternalStorage externalStorage;
 
     public ExcelWriter(Context context) {
         this.context = context;
-         new ExternalStorage(context).createExternalDirectory();
-         toaster = new Toaster();
+        externalStorage = new ExternalStorage(context);
+        externalStorage.createExternalDirectory();
+        toaster = new Toaster();
     }
 
     /**
@@ -57,10 +59,9 @@ public class ExcelWriter {
     public void writeExcel(List<?> objectList, String excelFilePath) throws IOException {
         Workbook workbook = eWorkBook.createWorkBook(excelFilePath);
         Sheet sheet = workbook.createSheet(excelFilePath.toLowerCase());
-        int rowCount = 0;
         toaster.showToastMessage(this.context, excelFilePath + EMedia.MESSAGE_CREATE_EXCEL_SHEET);
+        int rowCount = 0;
         for (Object object : objectList) {
-
             Row row = sheet.createRow(++rowCount);
             try {
                 createHeaderRow(object, sheet);
@@ -71,11 +72,7 @@ public class ExcelWriter {
         }
 
         try {
-            File folder = Environment.getExternalStoragePublicDirectory(EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
-            File file = new File(folder, excelFilePath);
-            FileOutputStream outputStream = new FileOutputStream(file);
-            workbook.write(outputStream);
-            outputStream.close();
+            externalStorage.writeFileToExternalStorage(excelFilePath, workbook);
         } catch (Exception e) {
             logger.info("File write failed: " + e.toString());
         }
@@ -122,19 +119,21 @@ public class ExcelWriter {
         }
     }
 
+
+    /**
+     * Create Page Header and Footer
+     * Style Header and Footer contents
+     **/
     private void createHeaderRow(Object o, Sheet sheet) {
-        Cell cell = null;
+
         PrintSetup printSetup = sheet.getPrintSetup();
-
-        /**Set Page Number on Footer **/
-        Footer ft = sheet.getFooter();
-        ft.setRight("Page " + HeaderFooter.page() + " of " + HeaderFooter.numPages());
-
-        /**Set Print Format**/
         sheet.setAutobreaks(true);
         printSetup.setFitHeight((short) 1);
         printSetup.setFitWidth((short) 1);
 
+
+        Footer ft = sheet.getFooter();
+        ft.setRight("Page " + HeaderFooter.page() + " of " + HeaderFooter.numPages());
 
         Row row = sheet.createRow(0);
         sheet.setDefaultColumnWidth(15);
@@ -144,15 +143,14 @@ public class ExcelWriter {
         eCellStyle = new ECellStyle(sheet, cell);
         eCellStyle.setDefaultHeaderBackground();
         cell.setCellValue("#");
-        int index = 0;
-        Field[] fields = o.getClass().getDeclaredFields();
 
+        Field[] fields = o.getClass().getDeclaredFields();
+        int index = 0;
         for (Field f : fields) {
-            logger.info(String.valueOf(f.getName()));
-            Cell cellN = row.createCell(++index);
-            eCellStyle = new ECellStyle(sheet, cellN);
+            cell = row.createCell(++index);
+            eCellStyle = new ECellStyle(sheet, cell);
             eCellStyle.setDefaultHeaderBackground();
-            cellN.setCellValue(f.getName().toUpperCase());
+            cell.setCellValue(f.getName().toUpperCase());
         }
 
     }
@@ -174,7 +172,7 @@ public class ExcelWriter {
                 Object value = field.get(obj);
                 cell.setCellStyle(eCellStyle.getCellStyle());
                 assert value != null;
-                cell.setCellValue(""+value.toString());
+                cell.setCellValue("" + value.toString());
             } catch (Exception e) {
                 logger.info(e.getMessage());
                 e.printStackTrace();
