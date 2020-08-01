@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="long_text">Since you are trying to cast the Context you pass (Application not Activity as you thought) to an Activity with</string>
+    <string name="info_icon">Info Icon</string>
+</resources>

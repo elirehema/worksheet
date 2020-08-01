@@ -28,6 +28,8 @@ public class EMedia {
 
     public static final String ERROR_DEVICE_MEMORY_IS_NOT_AVAILABLE = "Oops! Sorry SD card not Mounted  ";
 
+    public static final String MESSAGE_CREATE_EXCEL_SHEET =  "Excel Sheet creation has started";
+
 
 
 }
