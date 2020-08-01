@@ -1,4 +1,4 @@
-package org.sheet.arcolio.notify;
+package org.sheet.arcolio.notifier;
 
 import android.app.Activity;
 import android.content.Context;

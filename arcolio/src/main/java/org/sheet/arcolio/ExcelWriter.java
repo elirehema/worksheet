@@ -1,5 +1,6 @@
 package org.sheet.arcolio;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
@@ -38,7 +39,11 @@ public class ExcelWriter {
     private static final Logger LOGGER = Logger.getLogger(ExcelWriter.class.getName());
     private ECellStyle eCellStyle = null;
     private EWorkBook eWorkBook = new EWorkBook();
-    private ExternalStorage externalStorage = new ExternalStorage();
+    private ExternalStorage externalStorage = null;
+    private Context context;
+    public ExcelWriter(Context context){
+        externalStorage = new ExternalStorage(context);
+    }
 
     /**
      * Write an Excel File with single Sheet
