@@ -1,10 +1,8 @@
-package org.arcolio.excel;
-
-import java.util.List;
+package org.sheet.arcolio.storage;
 
 /**
- * -- This file created by eli on 15/07/2020 for poixss
- * --
+ * -- This file created by eli on 8/1/20 for project excel under Package Name: org.sheet.arcolio.storage
+ * -- Time: 8/1/204:07 PM
  * -- Licensed to the Apache Software Foundation (ASF) under one
  * -- or more contributor license agreements. See the NOTICE file
  * -- distributed with this work for additional information
@@ -23,28 +21,11 @@ import java.util.List;
  * -- under the License.
  * --
  **/
-public class Language {
-    public Language(String name, List<Book> books) {
-        this.name = name;
-        this.books = books;
-    }
+public class EMedia {
+    /**
+     * Default file location **/
+    public static final String DEFAULT_EXTERNAL_FILE_DIRECTORY = "ExcelSheets";
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    private String name;
-    private List<Book> books;
 }

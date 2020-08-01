@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">excel</string>
+    <string name="button_sample_excel">Click to create sample Excel file</string>
 </resources>
