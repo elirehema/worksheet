@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 
+import org.arcolio.excel.models.Book;
+import org.arcolio.excel.models.Language;
 import org.sheet.arcolio.ExcelWriter;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +24,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String excelFilePath = "NiceJavaBooks.xlsx";
+        String multipleFilePath = "BookList.xls";
         ExcelWriter excelWriter = new ExcelWriter();
-        //excelWriter.writeExcelSheet(getProgramingLanguage(),"ExcelFile");
+        try {
+            excelWriter.writeExcel(getProgramingLanguage(),multipleFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
+
+
 
 
     public List<Book> getListBook(){
