@@ -33,11 +33,20 @@ import org.sheet.arcolio.R;
  * --
  **/
 public class Toaster {
-    public static void showToastMessage(Context context, String message) {
+    Context context;
+    String message;
+
+    public Toaster(Context context, String message) {
+        this.context = context;
+        this.message = message;
+        showToastMessage(context, message);
+    }
+
+    private static void showToastMessage(Context context, String message) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) ((Activity) context).findViewById(R.id.custom_toast));
 
-        TextView text = (TextView) layout.findViewById(R.id.text);
+        TextView text = (TextView) layout.findViewById(R.id.info_message);
         text.setText(message);
 
         // Toast..
