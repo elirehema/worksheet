@@ -26,8 +26,6 @@ jobs:
       run: sudo chown -R $(whoami) $ANDROID_HOME
     - name: Build with Gradle
       run: sudo ./gradlew build --stacktrace
-    - name: Build with XLint
-      run:  sudo ./gradle build -Xlint
     - name: Android Github Action
       uses: Vukan-Markovic/Github-Android-Action@1.2
 
