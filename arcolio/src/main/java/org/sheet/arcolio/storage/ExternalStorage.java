@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import org.apache.poi.ss.usermodel.Workbook;
 import org.sheet.arcolio.R;
 import org.sheet.arcolio.notifier.Toaster;
 
@@ -36,42 +39,47 @@ import java.io.FileOutputStream;
 public class ExternalStorage {
     private Context context;
     private Toaster toaster = null;
-    public ExternalStorage(Context context){
+
+    public ExternalStorage(Context context) {
         this.context = context;
     }
 
-    /** Create External storage **/
-    public void createExternalDirectory(){
+    /**
+     * Create External storage
+     **/
+    public void createExternalDirectory() {
         File f = new File(Environment.getExternalStorageDirectory(), EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
         if (!f.exists()) {
             f.mkdirs();
         }
         /**
-        if (isExternalMediaStorageAvailable()) {
-            File f = new File(Environment.getExternalStorageDirectory(), EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
-            if (!f.exists()) {
-                f.mkdirs();
-            }
-        }else {
-            toaster = new Toaster(context, EMedia.ERROR_DEVICE_MEMORY_IS_NOT_AVAILABLE);
-        }
-        **/
+         if (isExternalMediaStorageAvailable()) {
+         File f = new File(Environment.getExternalStorageDirectory(), EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
+         if (!f.exists()) {
+         f.mkdirs();
+         }
+         }else {
+         toaster = new Toaster(context, EMedia.ERROR_DEVICE_MEMORY_IS_NOT_AVAILABLE);
+         }
+         **/
     }
 
-    /** Check External Media Availability
+    /**
+     * Check External Media Availability
      * The Media might be mounted to a computer,
-     * missing, read-only or some other state **/
-    private Boolean isExternalMediaStorageAvailable(){
+     * missing, read-only or some other state
+     **/
+    private Boolean isExternalMediaStorageAvailable() {
         boolean isMediaAvailable = false;
         boolean isMediaReadable = false;
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(true)){
+        if (Environment.MEDIA_MOUNTED.equals(true)) {
             //Both read and write operations available
             isMediaAvailable = true;
-        }else if(Environment.MEDIA_MOUNTED_READ_ONLY.equals(true)){
+        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(true)) {
             isMediaAvailable = true;
             isMediaReadable = true;
-        }else{
+        } else {
             //SD card not mounted
             isMediaAvailable = false;
         }
@@ -79,18 +87,32 @@ public class ExternalStorage {
         return isMediaAvailable && isMediaReadable;
     }
 
-    /** Write to External Storage **/
-    public void writeFileToExternalStorage(){
+    /**
+     * Write to Defined External Storage
+     **/
+    public void writeFileToExternalStorage(@NonNull String excelFilePath, @NonNull File folder, @NonNull Workbook workbook) {
+        File file = new File(folder, excelFilePath);
+        writeOutputStream(file, workbook);
+    }
+
+
+    /**
+     * Write to Default External Storage Folder
+     **/
+    public void writeFileToExternalStorage(@NonNull String excelFilePath, @NonNull Workbook workbook) {
         File folder = Environment.getExternalStoragePublicDirectory(EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
-        File file = new File(folder, "File.xls");
+        File file = new File(folder, excelFilePath);
+        writeOutputStream(file, workbook);
+    }
+
+    private void writeOutputStream(File file, Workbook workbook) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write("Elirehema".getBytes());
+            workbook.write(fileOutputStream);
             fileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }
