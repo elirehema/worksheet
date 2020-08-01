@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import org.sheet.arcolio.R;
+import org.sheet.arcolio.notifier.Toaster;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,6 +35,7 @@ import java.io.FileOutputStream;
  **/
 public class ExternalStorage {
     private Context context;
+    private Toaster toaster = null;
     public ExternalStorage(Context context){
         this.context = context;
     }
@@ -44,7 +48,7 @@ public class ExternalStorage {
                 f.mkdirs();
             }
         }else {
-            Toast.makeText(context,"",Toast.LENGTH_LONG);
+            toaster = new Toaster(context, EMedia.ERROR_DEVICE_MEMORY_IS_NOT_AVAILABLE);
         }
     }
 
@@ -66,8 +70,7 @@ public class ExternalStorage {
             isMediaAvailable = false;
         }
 
-        boolean b = isMediaAvailable && isMediaReadable;
-        return b;
+        return isMediaAvailable && isMediaReadable;
     }
 
     /** Write to External Storage **/
