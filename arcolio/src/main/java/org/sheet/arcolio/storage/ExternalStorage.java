@@ -1,18 +1,15 @@
 package org.sheet.arcolio.storage;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
-import android.widget.Toast;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.sheet.arcolio.R;
 import org.sheet.arcolio.notifier.Toaster;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 /**
@@ -46,22 +43,13 @@ public class ExternalStorage {
 
     /**
      * Create External storage
+     * Drop operation if exist
      **/
     public void createExternalDirectory() {
-        File f = new File(Environment.getExternalStorageDirectory(), EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
+        File f =  this.getExternalFile();
         if (!f.exists()) {
             f.mkdirs();
         }
-        /**
-         if (isExternalMediaStorageAvailable()) {
-         File f = new File(Environment.getExternalStorageDirectory(), EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
-         if (!f.exists()) {
-         f.mkdirs();
-         }
-         }else {
-         toaster = new Toaster(context, EMedia.ERROR_DEVICE_MEMORY_IS_NOT_AVAILABLE);
-         }
-         **/
     }
 
     /**
@@ -73,10 +61,10 @@ public class ExternalStorage {
         boolean isMediaAvailable = false;
         boolean isMediaReadable = false;
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(true)) {
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
             //Both read and write operations available
             isMediaAvailable = true;
-        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(true)) {
+        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
             isMediaAvailable = true;
             isMediaReadable = true;
         } else {
@@ -90,22 +78,25 @@ public class ExternalStorage {
     /**
      * Write to Defined External Storage
      **/
+    @Keep
     public void writeFileToExternalStorage(@NonNull String excelFilePath, @NonNull File folder, @NonNull Workbook workbook) {
         File file = new File(folder, excelFilePath);
-        writeOutputStream(file, workbook);
+        WriteToOutputStream(file, workbook);
     }
 
 
     /**
      * Write to Default External Storage Folder
      **/
+    @Keep
     public void writeFileToExternalStorage(@NonNull String excelFilePath, @NonNull Workbook workbook) {
-        File folder = Environment.getExternalStoragePublicDirectory(EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
+        File folder = this.getExternalFile();
         File file = new File(folder, excelFilePath);
-        writeOutputStream(file, workbook);
+        WriteToOutputStream(file, workbook);
     }
 
-    private void writeOutputStream(File file, Workbook workbook) {
+    @Keep
+    private void WriteToOutputStream(File file, Workbook workbook) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             workbook.write(fileOutputStream);
@@ -113,6 +104,13 @@ public class ExternalStorage {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /** Get default public Directory **/
+    @Keep
+    private File getExternalFile(){
+        return Environment.getExternalStoragePublicDirectory(EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
     }
 
 }
