@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         String excelFilePath = "NiceJavaBooks.xlsx";
         String multipleFilePath = "BookList.xls";
-        ExcelWriter excelWriter = new ExcelWriter();
+        ExcelWriter excelWriter = new ExcelWriter(this.getApplicationContext());
         try {
             excelWriter.writeExcel(getProgramingLanguage(),multipleFilePath);
         } catch (IOException e) {
