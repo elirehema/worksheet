@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 
 import java.io.File;
 import java.lang.Class;
+
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HeaderFooter;
 import org.apache.poi.ss.usermodel.Cell;
@@ -40,14 +41,14 @@ public class ExcelWriter {
     private Logger logger = Logger.getLogger(ExcelWriter.class.getName());
     private ECellStyle eCellStyle = null;
     private EWorkBook eWorkBook = new EWorkBook();
-    private ExternalStorage externalStorage = null;
-    private Toaster toaster = null;
     private Context context;
-    public ExcelWriter(Context context){
-        externalStorage = new ExternalStorage(context);
-        toaster = new Toaster();
-        externalStorage.createExternalDirectory();
+    private Cell cell = null;
+    Toaster toaster;
 
+    public ExcelWriter(Context context) {
+        this.context = context;
+         new ExternalStorage(context).createExternalDirectory();
+         toaster = new Toaster();
     }
 
     /**
@@ -56,8 +57,8 @@ public class ExcelWriter {
     public void writeExcel(List<?> objectList, String excelFilePath) throws IOException {
         Workbook workbook = eWorkBook.createWorkBook(excelFilePath);
         Sheet sheet = workbook.createSheet(excelFilePath.toLowerCase());
-
         int rowCount = 0;
+        toaster.showToastMessage(this.context, excelFilePath + EMedia.MESSAGE_CREATE_EXCEL_SHEET);
         for (Object object : objectList) {
 
             Row row = sheet.createRow(++rowCount);
@@ -71,34 +72,32 @@ public class ExcelWriter {
 
         try {
             File folder = Environment.getExternalStoragePublicDirectory(EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
-            File  file = new File(folder, excelFilePath);
+            File file = new File(folder, excelFilePath);
             FileOutputStream outputStream = new FileOutputStream(file);
             workbook.write(outputStream);
-            //outputStream.close();
-        }catch (Exception e){
-            logger.info("File write failed: " +e.toString());
+            outputStream.close();
+        } catch (Exception e) {
+            logger.info("File write failed: " + e.toString());
         }
     }
 
     public void writeMultipleSheetExcel(List<?> languages, String excelFilePath) throws IOException {
         Workbook workbook = eWorkBook.createWorkBook(excelFilePath);
         for (Object parentObject : languages) {
-            System.out.println(parentObject.getClass().getDeclaredFields());
             int rowCount = 0;
             Field[] fields = parentObject.getClass().getDeclaredFields();
             for (Field f : fields) {
 
                 try {
-                    Field field = parentObject.getClass().getDeclaredField(f.getName().toString());
+                    Field field = parentObject.getClass().getDeclaredField(f.getName());
 
                     field.setAccessible(true);
                     Object object = field.get(parentObject);
 
                     if (object instanceof Collection) {
-                        // System.out.println("Collection Instance" + object.toString());
+
                     }
                     if (object instanceof String) {
-                        //  System.out.println("String Instance:  " + object.toString());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -118,13 +117,13 @@ public class ExcelWriter {
         try {
             FileOutputStream outputStream = new FileOutputStream(excelFilePath);
             workbook.write(outputStream);
-        }catch (Exception e){
-            Log.e("EXCEPTION", "File write failed: " +e.toString());
+        } catch (Exception e) {
+            Log.e("EXCEPTION", "File write failed: " + e.toString());
         }
     }
 
     private void createHeaderRow(Object o, Sheet sheet) {
-        Cell cell =  null;
+        Cell cell = null;
         PrintSetup printSetup = sheet.getPrintSetup();
 
         /**Set Page Number on Footer **/
@@ -150,7 +149,7 @@ public class ExcelWriter {
 
         for (Field f : fields) {
             logger.info(String.valueOf(f.getName()));
-           Cell cellN = row.createCell(++index);
+            Cell cellN = row.createCell(++index);
             eCellStyle = new ECellStyle(sheet, cellN);
             eCellStyle.setDefaultHeaderBackground();
             cellN.setCellValue(f.getName().toUpperCase());
@@ -159,23 +158,23 @@ public class ExcelWriter {
     }
 
     private void writeExcelSheetBook(Object obj, Integer rowNumber, Row row) {
-        Cell cella = row.createCell(0);
-        eCellStyle = new ECellStyle(cella);
-        cella.setCellValue(rowNumber.toString());
-        cella.setCellStyle(eCellStyle.getCellStyle());
+        cell = row.createCell(0);
+        eCellStyle = new ECellStyle(cell);
+        cell.setCellValue(rowNumber.toString());
+        cell.setCellStyle(eCellStyle.getCellStyle());
         Field[] fields = obj.getClass().getDeclaredFields();
-
         int rowCount = 0;
         for (Field f : fields) {
             f.setAccessible(true);
-            Cell cell1 = row.createCell(++rowCount);
-            eCellStyle = new ECellStyle(cell1);
+            cell = row.createCell(++rowCount);
+            eCellStyle = new ECellStyle(cell);
             try {
                 Field field = obj.getClass().getDeclaredField(f.getName());
                 field.setAccessible(true);
                 Object value = field.get(obj);
-                cell1.setCellStyle(eCellStyle.getCellStyle());
-                cell1.setCellValue(value.toString());
+                cell.setCellStyle(eCellStyle.getCellStyle());
+                assert value != null;
+                cell.setCellValue(""+value.toString());
             } catch (Exception e) {
                 logger.info(e.getMessage());
                 e.printStackTrace();

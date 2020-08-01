@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.Button;
 
 import org.arcolio.excel.models.Book;
 import org.arcolio.excel.models.Language;
@@ -18,19 +20,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    String multipleFilePath = "BookList.xls";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String multipleFilePath = "BookList.xls";
-        ExcelWriter excelWriter = new ExcelWriter(this.getApplicationContext());
-        try {
-            excelWriter.writeExcel(getListBook(),multipleFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Button button = findViewById(R.id.create_excel_sheet);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExcelWriter excelWriter = new ExcelWriter(view.getContext());
+                try {
+                    excelWriter.writeExcel(getListBook(),multipleFilePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 
