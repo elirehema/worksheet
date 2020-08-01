@@ -1,5 +1,7 @@
 package org.arcolio.excel.models;
 
+import androidx.annotation.Keep;
+
 /**
  * -- This file created by eli on 15/07/2020 for poixss
  * --
@@ -21,6 +23,7 @@ package org.arcolio.excel.models;
  * -- under the License.
  * --
  **/
+@Keep
 public class Book {
 
     public Book(String title, String author, Integer price, String description, String uriSegment, String theme, String publisher, String mssidn) {

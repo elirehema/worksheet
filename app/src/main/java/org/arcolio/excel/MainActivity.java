@@ -24,11 +24,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String excelFilePath = "NiceJavaBooks.xlsx";
         String multipleFilePath = "BookList.xls";
         ExcelWriter excelWriter = new ExcelWriter(this.getApplicationContext());
         try {
-            excelWriter.writeExcel(getProgramingLanguage(),multipleFilePath);
+            excelWriter.writeExcel(getListBook(),multipleFilePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,14 +59,5 @@ public class MainActivity extends AppCompatActivity {
 
 
         return bookList;
-    }
-
-    public List<Language> getProgramingLanguage(){
-        Language language1 = new Language("Java", this.getListBook());
-        Language language2 = new Language("Python", this.getListBook());
-        Language language3 = new Language("Javascript", this.getListBook());
-        Language language4 = new Language("Ruby", this.getListBook());
-        Language language5 = new Language("Kotlin", this.getListBook());
-        return  Arrays.asList(language1,language2,language3,language4, language5);
     }
 }

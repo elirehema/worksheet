@@ -42,6 +42,11 @@ public class ExternalStorage {
 
     /** Create External storage **/
     public void createExternalDirectory(){
+        File f = new File(Environment.getExternalStorageDirectory(), EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        /**
         if (isExternalMediaStorageAvailable()) {
             File f = new File(Environment.getExternalStorageDirectory(), EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
             if (!f.exists()) {
@@ -50,6 +55,7 @@ public class ExternalStorage {
         }else {
             toaster = new Toaster(context, EMedia.ERROR_DEVICE_MEMORY_IS_NOT_AVAILABLE);
         }
+        **/
     }
 
     /** Check External Media Availability

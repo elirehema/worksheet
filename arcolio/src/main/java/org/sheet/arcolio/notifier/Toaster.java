@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Keep;
+
 import org.sheet.arcolio.R;
 
 /**
@@ -32,17 +34,19 @@ import org.sheet.arcolio.R;
  * -- under the License.
  * --
  **/
+@Keep
 public class Toaster {
     Context context;
     String message;
 
+    public Toaster(){}
     public Toaster(Context context, String message) {
         this.context = context;
         this.message = message;
         showToastMessage(context, message);
     }
 
-    private static void showToastMessage(Context context, String message) {
+    public void showToastMessage(Context context, String message) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) ((Activity) context).findViewById(R.id.custom_toast));
 

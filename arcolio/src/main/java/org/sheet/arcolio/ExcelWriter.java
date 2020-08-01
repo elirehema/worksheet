@@ -23,6 +23,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.sheet.arcolio.cellstyles.ECellStyle;
+import org.sheet.arcolio.notifier.Toaster;
 import org.sheet.arcolio.storage.EMedia;
 import org.sheet.arcolio.storage.ExternalStorage;
 import org.sheet.arcolio.workbook.EWorkBook;
@@ -36,13 +37,17 @@ import java.util.logging.Logger;
 
 @Keep
 public class ExcelWriter {
-    private static final Logger LOGGER = Logger.getLogger(ExcelWriter.class.getName());
+    private Logger logger = Logger.getLogger(ExcelWriter.class.getName());
     private ECellStyle eCellStyle = null;
     private EWorkBook eWorkBook = new EWorkBook();
     private ExternalStorage externalStorage = null;
+    private Toaster toaster = null;
     private Context context;
     public ExcelWriter(Context context){
         externalStorage = new ExternalStorage(context);
+        toaster = new Toaster();
+        externalStorage.createExternalDirectory();
+
     }
 
     /**
@@ -51,25 +56,27 @@ public class ExcelWriter {
     public void writeExcel(List<?> objectList, String excelFilePath) throws IOException {
         Workbook workbook = eWorkBook.createWorkBook(excelFilePath);
         Sheet sheet = workbook.createSheet(excelFilePath.toLowerCase());
-        externalStorage.createExternalDirectory();
+
         int rowCount = 0;
         for (Object object : objectList) {
-            createHeaderRow(object, sheet);
+
             Row row = sheet.createRow(++rowCount);
             try {
+                createHeaderRow(object, sheet);
                 writeExcelSheetBook(object, rowCount, row);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
         try {
             File folder = Environment.getExternalStoragePublicDirectory(EMedia.DEFAULT_EXTERNAL_FILE_DIRECTORY);
             File  file = new File(folder, excelFilePath);
             FileOutputStream outputStream = new FileOutputStream(file);
             workbook.write(outputStream);
-            outputStream.close();
+            //outputStream.close();
         }catch (Exception e){
-            Log.e("EXCEPTION", "File write failed: " +e.toString());
+            logger.info("File write failed: " +e.toString());
         }
     }
 
@@ -117,7 +124,6 @@ public class ExcelWriter {
     }
 
     private void createHeaderRow(Object o, Sheet sheet) {
-        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
         Cell cell =  null;
         PrintSetup printSetup = sheet.getPrintSetup();
 
@@ -140,33 +146,38 @@ public class ExcelWriter {
         eCellStyle.setDefaultHeaderBackground();
         cell.setCellValue("#");
         int index = 0;
-        for (Field f : o.getClass().getDeclaredFields()) {
-            cell = row.createCell(++index);
-            eCellStyle = new ECellStyle(sheet, cell);
-            eCellStyle
-                    .setDefaultHeaderBackground();
-            cell.setCellValue(f.getName().toUpperCase());
+        Field[] fields = o.getClass().getDeclaredFields();
+
+        for (Field f : fields) {
+            logger.info(String.valueOf(f.getName()));
+           Cell cellN = row.createCell(++index);
+            eCellStyle = new ECellStyle(sheet, cellN);
+            eCellStyle.setDefaultHeaderBackground();
+            cellN.setCellValue(f.getName().toUpperCase());
         }
 
     }
 
     private void writeExcelSheetBook(Object obj, Integer rowNumber, Row row) {
-        Cell cell = row.createCell(0);
-        eCellStyle = new ECellStyle(cell);
-        cell.setCellValue(rowNumber.toString());
+        Cell cella = row.createCell(0);
+        eCellStyle = new ECellStyle(cella);
+        cella.setCellValue(rowNumber.toString());
+        cella.setCellStyle(eCellStyle.getCellStyle());
         Field[] fields = obj.getClass().getDeclaredFields();
+
         int rowCount = 0;
         for (Field f : fields) {
             f.setAccessible(true);
-            cell = row.createCell(++rowCount);
-            eCellStyle = new ECellStyle(cell);
+            Cell cell1 = row.createCell(++rowCount);
+            eCellStyle = new ECellStyle(cell1);
             try {
-                Field field = obj.getClass().getDeclaredField(f.getName().toString());
+                Field field = obj.getClass().getDeclaredField(f.getName());
                 field.setAccessible(true);
                 Object value = field.get(obj);
-                cell.setCellStyle(eCellStyle.getCellStyle());
-                cell.setCellValue(value.toString());
+                cell1.setCellStyle(eCellStyle.getCellStyle());
+                cell1.setCellValue(value.toString());
             } catch (Exception e) {
+                logger.info(e.getMessage());
                 e.printStackTrace();
             }
         }
