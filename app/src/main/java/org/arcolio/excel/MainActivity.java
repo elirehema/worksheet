@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,19 +34,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ExcelWriter excelWriter = new ExcelWriter(view.getContext());
                 try {
-                    excelWriter.writeExcel(getListBook(),multipleFilePath);
+                    excelWriter.WriteMultipleSheetExcel(getProgramingLanguage(),multipleFilePath );
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
+        ExcelWriter excelWriter = new ExcelWriter(this);
+        try {
+            excelWriter.WriteMultipleSheetExcel(getProgramingLanguage(),multipleFilePath );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
 
 
 
-    public List<Book> getListBook(){
+    public static List<Book> getListBook(){
         Book book = null;
         Book book2 = new Book("Effective Java", "Joshua Bloch", 36,"Effective Java","overflow.com",
                 "Learn Java ","Baron Quinn","M8S4DS3211");
@@ -67,5 +74,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         return bookList;
+    }
+    public static List<Language> getProgramingLanguage() {
+        Language language1 = new Language("Java", getListBook());
+        Language language2 = new Language("Python", getListBook());
+        Language language3 = new Language("Javascript", getListBook());
+        Language language4 = new Language("Ruby", getListBook());
+        Language language5 = new Language("Kotlin", getListBook());
+
+
+        List<Language> languageList = Arrays.asList(language1, language2, language3, language4, language5);
+
+        return languageList;
     }
 }

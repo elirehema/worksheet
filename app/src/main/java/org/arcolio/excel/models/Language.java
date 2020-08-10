@@ -1,5 +1,7 @@
 package org.arcolio.excel.models;
 
+import androidx.annotation.Keep;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ import java.util.List;
  * -- under the License.
  * --
  **/
+@Keep
 public class Language {
     public Language(String name, List<Book> books) {
         this.name = name;
