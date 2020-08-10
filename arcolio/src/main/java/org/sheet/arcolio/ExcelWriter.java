@@ -57,6 +57,9 @@ public class ExcelWriter {
      * Write an Excel File with single Sheet
      **/
     public void writeExcel(List<?> objectList, String excelFilePath) throws IOException {
+        if (objectList == null) {
+            return;
+        }
         Workbook workbook = eWorkBook.createWorkBook(excelFilePath);
         Sheet sheet = workbook.createSheet(excelFilePath.toLowerCase());
         toaster.showToastMessage(this.context, excelFilePath + EMedia.MESSAGE_CREATE_EXCEL_SHEET);
@@ -78,44 +81,56 @@ public class ExcelWriter {
         }
     }
 
-    public void writeMultipleSheetExcel(List<?> languages, String excelFilePath) throws IOException {
+    public void WriteMultipleSheetExcel(List<?> objects, String excelFilePath) throws IOException {
         Workbook workbook = eWorkBook.createWorkBook(excelFilePath);
-        for (Object parentObject : languages) {
-            int rowCount = 0;
-            Field[] fields = parentObject.getClass().getDeclaredFields();
+        int rowCount = 0;
+        for (Object obj : objects) {
+            logger.info("Logger Info: " + obj.toString());
+            Sheet sheet = workbook.createSheet(excelFilePath.toLowerCase());
+            try {
+                createHeaderRow(obj, sheet);
+                Row row = sheet.createRow(++rowCount);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Field[] fields = obj.getClass().getDeclaredFields();
+
+            /**
             for (Field f : fields) {
-
                 try {
-                    Field field = parentObject.getClass().getDeclaredField(f.getName());
-
+                    Field field =  obj.getClass().getDeclaredField(f.getName());
                     field.setAccessible(true);
-                    Object object = field.get(parentObject);
+                    Object object = field.get(obj);
+
+
 
                     if (object instanceof Collection) {
+                        //logger.info("Collection Object: " + object.toString());
+                        /**for (Object obj: ((Collection<Object>) object)) {
 
+                         try {
+                         writeExcelSheetBook(obj, rowCount, row);
+                         } catch (Exception e) {
+                         e.printStackTrace();
+                         }
+                         }
+
+
+                        return;
+                    }else {
+                        logger.info("String Object: " + object.toString());
                     }
-                    if (object instanceof String) {
-                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-           /* for (Object obj : parentObject.getBooks()) {
-                createHeaderRow(obj, sheet);
-                Row row = sheet.createRow(++rowCount);
-                try {
-                    writeBook(obj, rowCount, row);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }*/
-            rowCount = 0;
+            **/
         }
         try {
-            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
-            workbook.write(outputStream);
+            externalStorage.writeFileToExternalStorage(excelFilePath, workbook);
         } catch (Exception e) {
-            Log.e("EXCEPTION", "File write failed: " + e.toString());
+            logger.info("File write failed: " + e.toString());
         }
     }
 
@@ -125,7 +140,9 @@ public class ExcelWriter {
      * Style Header and Footer contents
      **/
     private void createHeaderRow(Object o, Sheet sheet) {
-
+        if (o == null) {
+            return;
+        }
         PrintSetup printSetup = sheet.getPrintSetup();
         sheet.setAutobreaks(true);
         printSetup.setFitHeight((short) 1);
@@ -156,6 +173,9 @@ public class ExcelWriter {
     }
 
     private void writeExcelSheetBook(Object obj, Integer rowNumber, Row row) {
+        if (obj == null) {
+            return;
+        }
         cell = row.createCell(0);
         eCellStyle = new ECellStyle(cell);
         cell.setCellValue(rowNumber.toString());
