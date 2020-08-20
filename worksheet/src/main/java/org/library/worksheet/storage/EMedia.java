@@ -24,7 +24,7 @@ package org.library.worksheet.storage;
 public class EMedia {
     /**
      * Default file location **/
-    public static final String DEFAULT_EXTERNAL_FILE_DIRECTORY = "ExcelSheets";
+    public static final String DEFAULT_EXTERNAL_FILE_DIRECTORY = "worksheets";
 
     public static final String ERROR_DEVICE_MEMORY_IS_NOT_AVAILABLE = "Oops! Sorry SD card not Mounted  ";
 
