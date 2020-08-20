@@ -10,12 +10,16 @@ import android.widget.Button;
 
 import org.arcolio.excel.models.Book;
 import org.arcolio.excel.models.Language;
-import org.library.worksheet.ExcelWriter;
+import org.library.worksheet.ExcelBookImpl;
+import org.library.worksheet.cellstyles.CellEnum;
+import org.library.worksheet.cellstyles.WorkSheet;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     String multipleFilePath = "BookList.xls";
@@ -26,43 +30,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button = findViewById(R.id.create_excel_sheet);
+        final String path  = "ExternalFilePath";
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ExcelWriter excelWriter = new ExcelWriter(view.getContext());
+                WorkSheet workSheet;
                 try {
-                    excelWriter.WriteMultipleSheetExcel(getProgramingLanguage(),multipleFilePath );
+                    workSheet = new WorkSheet.Builder(getApplicationContext(), path)
+                            .setData(getListBook("Example Book"))
+                            .cell(CellEnum.TEAL_CELL)
+                            .write();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
-        ExcelWriter excelWriter = new ExcelWriter(this);
-        try {
-            excelWriter.WriteMultipleSheetExcel(getProgramingLanguage(),multipleFilePath );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
 
 
 
-    public static List<Book> getListBook(){
+    public static List<Book> getListBook(String bookName) {
         Book book = null;
-        Book book2 = new Book("Effective Java", "Joshua Bloch", 36,"Effective Java","overflow.com",
-                "Learn Java ","Baron Quinn","M8S4DS3211");
-        Book book3 = new Book("Clean Code", "Robert Martin", 42,"Effective Java","overflow.com",
-                "Learn Java ","Baron Quinn","M8S4DS3211");
-        Book book4 = new Book("Thinking in Java", "Bruce Eckel", 35,"Effective Java","overflow",
-                "Learn Java ","Baron Quinn","M8S4DS3211");
 
-        List<Book> listBook = Arrays.asList(book2,book3,book4);
-        List<Book>  bookList = new ArrayList<>();
-        for (int i=0; i<= 100; i++){
-            book = new Book("Head First Java", "Kathy Bruce", 79+i,"Effective Java","overflow",
-                    "Learn Java ","Baron Quinn","M8S4DS3211");
+        Book book2 = new Book(bookName, "Joshua Bloch", 36, "Effective Java", "overflow.com",
+                "Learn Java ", "Baron Quinn", "M8S4DS3211");
+        Book book3 = new Book(bookName, "Robert Martin", 42, "Effective Java", "overflow.com",
+                "Learn Java ", "Baron Quinn", "M8S4DS3211");
+        Book book4 = new Book(bookName, "Bruce Eckel", 35, "Effective Java", "overflow",
+                "Learn Java ", "Baron Quinn", "M8S4DS3211");
+
+        List<Book> listBook = Arrays.asList(book2, book3, book4);
+        List<Book> bookList = new ArrayList<>();
+        for (int i = 0; i <= 100; i++) {
+            book = new Book(bookName, "Kathy Bruce", 79 + i, "Effective Java", "overflow",
+                    "Learn Java ", "Baron Quinn", "M8S4DS3211");
             bookList.add(book);
         }
         bookList.add(book4);
@@ -72,16 +76,20 @@ public class MainActivity extends AppCompatActivity {
 
         return bookList;
     }
-    public static List<Language> getProgramingLanguage() {
-        Language language1 = new Language("Java", getListBook());
-        Language language2 = new Language("Python", getListBook());
-        Language language3 = new Language("Javascript", getListBook());
-        Language language4 = new Language("Ruby", getListBook());
-        Language language5 = new Language("Kotlin", getListBook());
+    public static List<Map<String, List<?>>> getListOfObject(){
+        List<Map<String, List<?>>> map =  new ArrayList<Map<String, List<?>>>();
+        Map<String, List<?>> map1 = new HashMap<>();
+        map1.put("Kotlin", getListBook("Kotlin Essential"));
+        map1.put("Java ", getListBook("Effective Java"));
+        map1.put("Python", getListBook("Python for beginners"));
+        map1.put("Javascript", getListBook("Javascript for Geeks"));
 
+        map1.put("VueJs", getListBook("VueJs for Geeks"));
 
-        List<Language> languageList = Arrays.asList(language1, language2, language3, language4, language5);
+        map1.put("Ruby", getListBook("Ruby build the world"));
+        map.add(map1);
 
-        return languageList;
+        return map;
     }
+
 }
