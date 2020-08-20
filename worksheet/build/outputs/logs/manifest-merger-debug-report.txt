@@ -1,0 +1,45 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+	package
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:2:5-36
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:1-7:12
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:3:5-79
+	android:name
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:3:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:4:5-81
+	android:name
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml:4:22-78
+uses-sdk
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+		ADDED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
+		INJECTED from /home/eli/Documents/user/mobiles/arcolio/worksheet/src/main/AndroidManifest.xml
