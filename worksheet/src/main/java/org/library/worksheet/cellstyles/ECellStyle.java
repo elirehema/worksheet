@@ -1,23 +1,25 @@
 package org.library.worksheet.cellstyles;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ECellStyle {
-    
+
     public static Map<CellEnum, CellStyle> createStyles(Workbook wb){
         Map<CellEnum, CellStyle> styles = new HashMap<>();
-
-
+        CellStyle style;
+        Font font;
 
         Font titleFont = wb.createFont();
-        titleFont.setFontHeightInPoints((short) 18);
+        titleFont.setFontName(XSSFFont.DEFAULT_FONT_NAME);
+        titleFont.setFontHeightInPoints((short)13);
         titleFont.setColor(IndexedColors.BLACK.getIndex());
-        titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
         Font monthFont = wb.createFont();
         monthFont.setFontName("Operator Mono Book");
@@ -25,50 +27,46 @@ public class ECellStyle {
         monthFont.setColor(IndexedColors.BLACK.getIndex());
 
         Font headerFont = wb.createFont();
-        headerFont.setFontName("Operator Mono Medium");
-        headerFont.setFontHeightInPoints((short) 13);
 
 
-        CellStyle style;
-        /**Default Header, Title and Cell **/
-        /**@param HEADER **/
+        /** @param DEFAULT_TITLE **/
+         font = wb.createFont();
+        font.setFontName(XSSFFont.DEFAULT_FONT_NAME);
+        font.setFontHeightInPoints((short)18);
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        font.setColor(IndexedColors.BLACK.getIndex());
 
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER_SELECTION);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setWrapText(true);
-        style.setFont(titleFont);
-
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setFont(font);
+        titleFont.setColor(IndexedColors.GREY_80_PERCENT.index);
+        style.setBorderRight(XSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.BLACK.getIndex());
         style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style.setBorderTop(XSSFCellStyle.BORDER_THIN);
         style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBorderBottom(XSSFCellStyle.BORDER_THIN);
         style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         styles.put(CellEnum.DEFAULT_TITLE, style);
 
 
-        style = wb.createCellStyle();
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setWrapText(true);
-        style.setFont(headerFont);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        styles.put(CellEnum.DEFAULT_HEADER, style);
+        /** DEFAULT_HEADER **/
+        font = wb.createFont();
+        font.setFontHeightInPoints((short)11);
+        font.setColor(IndexedColors.BLACK.getIndex());
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+
 
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setWrapText(true);
+        style.setFont(font);
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.BLACK.getIndex());
         style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -77,29 +75,51 @@ public class ECellStyle {
         style.setTopBorderColor(IndexedColors.BLACK.getIndex());
         style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        styles.put(CellEnum.DEFAULT_HEADER, style);
+
+
+        /** DEFAULT_CELL **/
+        font = wb.createFont();
+
+        style = wb.createCellStyle();
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        style.setWrapText(true);
+        style.setFont(font);
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         styles.put(CellEnum.DEFAULT_CELL, style);
 
 
-        /** Dashed Cell styles **/
-
-
-
+        /** FORMULA_1 **/
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         style.setDataFormat(wb.createDataFormat().getFormat("0.00"));
         styles.put(CellEnum.FORMULA_1, style);
 
+        /** FORMULA_2 **/
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setFillForegroundColor(IndexedColors.GREY_40_PERCENT.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         style.setDataFormat(wb.createDataFormat().getFormat("0.00"));
         styles.put(CellEnum.FORMULA_2, style);
 
+        /** FORMULA_3 **/
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
@@ -108,11 +128,18 @@ public class ECellStyle {
         style.setDataFormat(wb.createDataFormat().getFormat("0.00"));
         styles.put(CellEnum.FORMULA_3, style);
 
+        /** TEAL_TITLE **/
+        font = wb.createFont();
+        font.setFontName(XSSFFont.DEFAULT_FONT_NAME);
+        font.setFontHeightInPoints((short)18);
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        font.setColor(IndexedColors.WHITE.getIndex());
 
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         titleFont.setColor(IndexedColors.WHITE.getIndex());
-        style.setFont(titleFont);
+        //style.setFont(font);
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.WHITE.getIndex());
         style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -127,12 +154,17 @@ public class ECellStyle {
         styles.put(CellEnum.TEAL_TITLE, style);
 
 
+        /** TEAL_HEADER **/
+        font = wb.createFont();
+        font.setFontName(XSSFFont.DEFAULT_FONT_NAME);
+        font.setFontHeightInPoints((short)11);
+        font.setColor(IndexedColors.WHITE.getIndex());
+
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setWrapText(true);
-        headerFont.setColor(IndexedColors.WHITE.getIndex());
-        style.setFont(headerFont);
+        style.setFont(font);
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.WHITE.getIndex());
         style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -145,11 +177,10 @@ public class ECellStyle {
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         styles.put(CellEnum.TEAL_HEADER, style);
 
+        /** TEAL_CELL**/
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setWrapText(true);
-        monthFont.setColor(IndexedColors.WHITE.getIndex());
-        style.setFont(monthFont);
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.WHITE.getIndex());
         style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -158,15 +189,15 @@ public class ECellStyle {
         style.setTopBorderColor(IndexedColors.WHITE.getIndex());
         style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         style.setBottomBorderColor(IndexedColors.WHITE.getIndex());
-
         style.setFillForegroundColor(IndexedColors.TEAL.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         styles.put(CellEnum.TEAL_CELL, style);
 
 
+        /** LINE-1 **/
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.BLACK.getIndex());
         style.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.getIndex());
@@ -174,6 +205,7 @@ public class ECellStyle {
         style.setDataFormat(wb.createDataFormat().getFormat("0.00"));
         styles.put(CellEnum.LINE_1, style);
 
+        /** LINE_2 **/
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setVerticalAlignment(CellStyle.ALIGN_CENTER);

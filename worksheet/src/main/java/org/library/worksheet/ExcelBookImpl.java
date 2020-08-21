@@ -119,14 +119,14 @@ public class ExcelBookImpl {
         Row headerRow = sheet.createRow(1);
         headerRow.setHeightInPoints(35);
         indexcells = headerRow.createCell(0);
-        indexcells.setCellStyle(styles.get(HeaderCellStyle == null ? CellEnum.DEFAULT_CELL : HeaderCellStyle));
+        indexcells.setCellStyle(styles.get(HeaderCellStyle == null ? CellEnum.DEFAULT_HEADER : HeaderCellStyle));
         indexcells.setCellValue("#");
         int index = 0;
         Field[] fields = o.getClass().getDeclaredFields();
         for (int i = 0; i < getFieldNames(fields).size(); i++) {
             dataCell = headerRow.createCell(++index);
             sheet.setColumnWidth(i, (fields[i].getName().length() + 12) * 256);
-            dataCell.setCellStyle(styles.get(HeaderCellStyle == null ? CellEnum.DEFAULT_CELL : HeaderCellStyle));
+            dataCell.setCellStyle(styles.get(HeaderCellStyle == null ? CellEnum.DEFAULT_HEADER : HeaderCellStyle));
             dataCell.setCellValue(fields[i].getName().toUpperCase());
         }
         index = 0;
