@@ -107,12 +107,12 @@ public class WorkSheet {
             this.path = path;
         }
 
-        public Builder setMap(List<Map<String, List<?>>> map) {
+        public Builder setSheets(List<Map<String, List<?>>> map) {
             this.map = map;
             return this;
         }
 
-        public Builder setData(List<?> objects) {
+        public Builder setSheet(List<?> objects) {
             this.objects = objects;
             return this;
         }
@@ -137,16 +137,13 @@ public class WorkSheet {
             return this;
         }
 
-        public WorkSheet build() {
-            return new WorkSheet(objects, null, path, header, title, cell, background);
-        }
 
-        public WorkSheet write() throws IOException {
+        public WorkSheet writeSheet() throws IOException {
             excelBook.ExcelSheet(this.objects, path, header, title, cell);
             return new WorkSheet(objects, null, path, header, title, cell, background);
         }
 
-        public WorkSheet writes() throws IOException {
+        public WorkSheet writeSheets() throws IOException {
             excelBook.ExcelSheets(this.map , path, header, title, cell);
             return new WorkSheet( map, path, header, title, cell, background);
         }
