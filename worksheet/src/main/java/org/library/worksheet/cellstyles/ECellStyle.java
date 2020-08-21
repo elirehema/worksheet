@@ -122,7 +122,7 @@ public class ECellStyle {
         /** FORMULA_3 **/
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         style.setDataFormat(wb.createDataFormat().getFormat("0.00"));
@@ -138,8 +138,8 @@ public class ECellStyle {
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-        titleFont.setColor(IndexedColors.WHITE.getIndex());
-        //style.setFont(font);
+        style.setWrapText(true);
+        style.setFont(font);
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.WHITE.getIndex());
         style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -148,7 +148,6 @@ public class ECellStyle {
         style.setTopBorderColor(IndexedColors.WHITE.getIndex());
         style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         style.setBottomBorderColor(IndexedColors.WHITE.getIndex());
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
         style.setFillForegroundColor(IndexedColors.TEAL.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         styles.put(CellEnum.TEAL_TITLE, style);
@@ -159,6 +158,7 @@ public class ECellStyle {
         font.setFontName(XSSFFont.DEFAULT_FONT_NAME);
         font.setFontHeightInPoints((short)11);
         font.setColor(IndexedColors.WHITE.getIndex());
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
@@ -178,9 +178,14 @@ public class ECellStyle {
         styles.put(CellEnum.TEAL_HEADER, style);
 
         /** TEAL_CELL**/
+        font = wb.createFont();
+        font.setColor(IndexedColors.WHITE.getIndex());
+
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         style.setWrapText(true);
+        style.setFont(font);
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.WHITE.getIndex());
         style.setBorderLeft(HSSFCellStyle.BORDER_THIN);

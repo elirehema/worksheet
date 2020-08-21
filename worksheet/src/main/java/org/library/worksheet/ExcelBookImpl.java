@@ -141,6 +141,7 @@ public class ExcelBookImpl {
 
     private void writeExcelSheetBook(Object obj, Integer rowNumber, Row row, CellEnum DataCellStyle) {
         Cell cell = row.createCell(0);
+        row.setHeightInPoints(17);
         cell.setCellValue(rowNumber.toString());
         cell.setCellStyle(styles.get(DataCellStyle == null ? CellEnum.DEFAULT_CELL : DataCellStyle));
         Field[] fields = obj.getClass().getDeclaredFields();

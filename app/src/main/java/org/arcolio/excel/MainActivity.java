@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     workSheet = new WorkSheet.Builder(getApplicationContext(), path)
                             .setData(getListBook("Example Book"))
+                            .header(CellEnum.TEAL_HEADER)
+                            .cell(CellEnum.TEAL_CELL)
+                            .title(CellEnum.TEAL_TITLE)
                             .write();
                 } catch (IOException e) {
                     e.printStackTrace();
