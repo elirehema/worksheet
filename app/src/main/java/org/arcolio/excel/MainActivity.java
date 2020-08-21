@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     workSheet = new WorkSheet.Builder(getApplicationContext(), path)
                             .setData(getListBook("Example Book"))
-                            .cell(CellEnum.TEAL_CELL)
                             .write();
                 } catch (IOException e) {
                     e.printStackTrace();
