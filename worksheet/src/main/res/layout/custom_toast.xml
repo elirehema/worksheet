@@ -5,24 +5,25 @@
     android:id="@+id/custom_toast"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/toaster_padding"
-    android:background="@color/default_toast_background_color"
+
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/info_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/default_toast_background_color"
         android:gravity="center_horizontal"
+        android:padding="@dimen/toaster_padding"
         android:text="@string/long_text"
         android:textAlignment="center"
-        android:drawableLeft="@drawable/information"
+        app:drawableLeftCompat="@drawable/information"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:drawableStart="@drawable/information" />
+        app:drawableStartCompat="@drawable/information" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
