@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -54,7 +55,7 @@ public class ExcelBookImpl {
     public void ExcelSheet(List<?> objectList, String excelFilePath, CellEnum HeaderCellStyle, CellEnum TitleCellStyles, CellEnum DataCellStyle) throws IOException {
         Workbook workbook = eWorkBook.getDefaultExcelWorkbook(appendFileExtensionFormatIfNotProvided(excelFilePath));
         styles = eCellStyle.createStyles(workbook);
-        Sheet sheet = workbook.createSheet(excelFilePath.toLowerCase());
+        Sheet sheet = workbook.createSheet(excelFilePath.toLowerCase(Locale.ENGLISH));
         populateSingleSheetWithData(sheet, objectList, HeaderCellStyle, TitleCellStyles, DataCellStyle);
 
         try {
@@ -112,7 +113,7 @@ public class ExcelBookImpl {
         Row titleRow = sheet.createRow(0);
         titleRow.setHeightInPoints(45);
         Cell titleCell = titleRow.createCell(0);
-        titleCell.setCellValue(sheet.getSheetName().substring(0, 1).toUpperCase() + sheet.getSheetName().substring(1));
+        titleCell.setCellValue(sheet.getSheetName().substring(0, 1).toUpperCase(Locale.ENGLISH) + sheet.getSheetName().substring(1));
         titleCell.setCellStyle(styles.get(TitleCellStyles == null ? CellEnum.DEFAULT_TITLE : TitleCellStyles));
         sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, o.getClass().getDeclaredFields().length));
 
@@ -127,7 +128,7 @@ public class ExcelBookImpl {
             dataCell = headerRow.createCell(++index);
             sheet.setColumnWidth(i, (fields[i].getName().length() + 12) * 256);
             dataCell.setCellStyle(styles.get(HeaderCellStyle == null ? CellEnum.DEFAULT_HEADER : HeaderCellStyle));
-            dataCell.setCellValue(fields[i].getName().toUpperCase());
+            dataCell.setCellValue(fields[i].getName().toUpperCase(Locale.ROOT));
         }
         index = 0;
 

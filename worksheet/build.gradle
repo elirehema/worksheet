@@ -1,8 +1,16 @@
 apply plugin: 'com.android.library'
+apply from: "maven-push.gradle"
+apply plugin: 'maven-publish'
+
+
+
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
+    lintOptions {
+        tasks.lint.enabled = false
+    }
 
     defaultConfig {
         minSdkVersion 16
@@ -17,7 +25,7 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable true
@@ -34,11 +42,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-rc1"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0"
     api group: 'org.apache.poi', name: 'poi', version: '3.9'
     api group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
 }

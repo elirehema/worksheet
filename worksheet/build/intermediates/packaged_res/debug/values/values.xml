@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="background_color">#41c0a6</color>
-    <color name="default_toast_background_color">#009B77</color>
-    <dimen name="icon_width">24dp</dimen>
-    <dimen name="toaster_padding"> 8dp</dimen>
-    <string name="info_icon">Info Icon</string>
-    <string name="long_text">Since you are trying to cast the Context you pass (Application not Activity as you thought) to an Activity with</string>
-</resources>
