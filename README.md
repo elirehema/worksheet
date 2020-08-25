@@ -173,7 +173,7 @@ Example 3.
                 .setSheets(languageList)
                 .writeSheets();
 ```
-![Mutliple Excel Sheets](https://github.com/elirehema/arcolis/blob/master/img/ezgif.com-video-to-gif.gif?raw=true)
+<img alt="Gif image" src="https://github.com/elirehema/arcolis/blob/master/img/ezgif.com-video-to-gif.gif?raw=true" width="100%"></img>
 - #### **Remember**
 ---
 setSheet(List<Objects>)  goes with  createSheet()
