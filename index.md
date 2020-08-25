@@ -15,10 +15,11 @@ The library is written in Java and using [Apache poi](http://poi.apache.org/inde
 -In your application `build.gradle` (app module) add this 
 ```java
 dependencies{
-        .....................................
-        ..........................................
+              .....................................
+              ..........................................
 
-       implementation 'com.github.elirehema:worksheet:0.0.1'
+              implementation 'com.github.elirehema:worksheet:0.0.1'
+          }
 ```
 If you are using gradle below version 0.8.0 make sure you have added maven repository in your `project build.gradle` file
 ```java
